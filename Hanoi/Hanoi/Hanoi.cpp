@@ -1,9 +1,10 @@
 // Hanoi.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+// This program uses the iterative solution from https://en.wikipedia.org/wiki/Tower_of_Hanoi
 
 #include <iostream>
 #include <stack> 
 
+// Run when either stack 1 or stack 2 has no discs
 void oneStackIsEmpty(std::stack<int>& stack1, std::stack<int>& stack2, std::string num1, std::string num2)
 {
 	if (stack1.size() == 0)
@@ -22,6 +23,7 @@ void oneStackIsEmpty(std::stack<int>& stack1, std::stack<int>& stack2, std::stri
 	}
 }
 
+// Run when both stack 1 and stack 2 contain one or more discs
 void bothStacksAreOccupied(std::stack<int>& stack1, std::stack<int>& stack2, std::string num1, std::string num2)
 {
 	if (stack1.top() > stack2.top())
@@ -29,14 +31,14 @@ void bothStacksAreOccupied(std::stack<int>& stack1, std::stack<int>& stack2, std
 		int disc = stack2.top();
 		stack2.pop();
 		stack1.push(disc);
-		std::cout << "Moved " << disc << " from tower 2 to tower 1\n";
+		std::cout << "Moved " << disc << " from tower " << num2 << " to tower " << num1 << '\n';
 	}
 	else
 	{
 		int disc = stack1.top();
 		stack1.pop();
 		stack2.push(disc);
-		std::cout << "Moved " << disc << " from tower 1 to tower 2\n";
+		std::cout << "Moved " << disc << " from tower " << num1 << " to tower " << num2 << '\n';
 	}
 }
 
@@ -45,21 +47,27 @@ int main()
 	std::stack<int> tower1;
 	std::stack<int> tower2;
 	std::stack<int> tower3;
+
+	// Populate tower 1 with 10 discs
 	for (int i = 10; i > 0; i--)
 	{
 		tower1.push(i);
 	}
+
+	// Keep track of numbers of moves
 	int moves = 0;
 
 	while (true)
 	{
+		// Check for completion: tower 3 has 10 discs and top one is '1'
 		if (tower3.size() == 10 && tower3.top() == 1)
 		{
+			// Print number of moves (should be 1023)
 			std::cout << moves << " moves";
 			return 0;
 		}
 
-		// 1 and 2
+		// Procedure for towers 1 and 2
 		if (tower1.size() == 0 || tower2.size() == 0)
 		{
 			oneStackIsEmpty(tower1, tower2, "1", "2");
@@ -71,7 +79,7 @@ int main()
 			moves++;
 		}
 
-		// 1 and 3
+		// Procedure for towers 1 and 3
 		if (tower1.size() == 0 || tower3.size() == 0)
 		{
 			oneStackIsEmpty(tower1, tower3, "1", "3");
@@ -83,7 +91,7 @@ int main()
 			moves++;
 		}
 
-		// 2 and 3
+		// Procedure for towers 2 and 3
 		if (tower2.size() == 0 || tower3.size() == 0)
 		{
 			oneStackIsEmpty(tower2, tower3, "2", "3");
@@ -96,6 +104,7 @@ int main()
 		}
 	}
 
+	// Failure if this point is reached
 	return -1;
 }
 
