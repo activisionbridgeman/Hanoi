@@ -1,10 +1,13 @@
 // Hanoi.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// Prints out the steps required to solve the "Tower of Hanoi"
 // This program uses the iterative solution from https://en.wikipedia.org/wiki/Tower_of_Hanoi
 
 #include <iostream>
 #include <stack> 
 
 // Run when either stack 1 or stack 2 has no discs
+// Moves the disc from the stack containing one or more discs to the stack containing no discs
+// For example, if stackA has no discs, stackB must contain one or more discs, so the top disc from stackB will move to stackA
 void oneStackIsEmpty(std::stack<int>& stack1, std::stack<int>& stack2, std::string num1, std::string num2)
 {
 	if (stack1.size() == 0)
@@ -24,6 +27,8 @@ void oneStackIsEmpty(std::stack<int>& stack1, std::stack<int>& stack2, std::stri
 }
 
 // Run when both stack 1 and stack 2 contain one or more discs
+// If both stacks contain one or more discs, then the smaller top disc must be moved to the stack with the larger top disc
+// For example, if stackA has a top disc of 5 and stackB has a top disc of 2, then the top disc from stackB must be moved to the top of stackA
 void bothStacksAreOccupied(std::stack<int>& stack1, std::stack<int>& stack2, std::string num1, std::string num2)
 {
 	if (stack1.top() > stack2.top())
